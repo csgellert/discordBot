@@ -25,7 +25,7 @@ async def on_ready():
 @bot.command()
 async def copymessages(ctx):
 
-    COPY_BOT_MESSEGAES = True
+    COPY_BOT_MESSEGAES = False
 
     # Check if the command was issued in the correct channel
     if ctx.channel.id == SOURCE_CHANNEL_ID:
@@ -85,8 +85,7 @@ async def copymessages(ctx):
 @bot.command()
 async def counting(ctx):
     # Check if the command was issued in the correct channel
-    if ctx.channel.id == SOURCE_CHANNEL_ID:
-        source_channel = bot.get_channel(SOURCE_CHANNEL_ID)
+    #! This function is only for testing purposes, it generates messages for a channel 
     for i in range(120):
         await ctx.send(f'{i}')
 @bot.command()
@@ -113,5 +112,17 @@ async def deletebotmessages(ctx):
             await ctx.send("Could not find the target channel.")
     else:
         await ctx.send("This command can only be used in the target channel.")
+#* Help
+@bot.command()
+async def help(ctx):
+    # Check if the command was issued in the correct channel
+    #! This function is only for testing purposes, it generates messages for a channel 
+    help_msg = "List of commands:\n"
+    help_msg += "!compymessages: *copies messages from the source channel to the target channel (The chanels shall be preset in the code)*\n"
+    help_msg += "!deletebotmessages: *Deletes all messeges from the target channel sent by the bot (target channel shall be preset in the code)*\n"
+    help_msg += "!counting: *For testing purposes only, it starts a counting on the given channel to generate messages for it\n"
+    help_msg += "!help: *Lists the commands implemented for the bot"
+
+    await ctx.send(f'{i}')
 # Run the bot
 bot.run(BOT_TOKEN)
