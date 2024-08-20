@@ -53,7 +53,7 @@ async def copymessages(ctx):
                     if previous_message is not None and previous_message.author == message.author and timedelta(seconds=5)>message.created_at - previous_message.created_at:
                         new_message = await target_channel.send(f'    {message.content}',files=files)
                     else:
-                        new_message = await target_channel.send(f'**{message.author.display_name}**: {message.content}',files=files)
+                        new_message = await target_channel.send(f'**{message.author.display_name}** [*{message.created_at.strftime("%Y-%m-%d")}*]: {message.content}',files=files)
                     if message.thread:
                     # Create a corresponding thread in the target channel
                         new_thread = await new_message.create_thread(name=message.thread.name)
