@@ -22,11 +22,11 @@ async def on_ready():
     print(f'Logged in as {bot.user.name}')
 
 
-@bot.command()
+@bot.command(help="Copies messages from the source channel to the target channel (The chanels shall be preset in the code)")
 async def copymessages(ctx):
 
     COPY_BOT_MESSEGAES = False
-
+    print("Starting copying messages...")
     # Check if the command was issued in the correct channel
     if ctx.channel.id == SOURCE_CHANNEL_ID:
         source_channel = bot.get_channel(SOURCE_CHANNEL_ID)
@@ -74,22 +74,26 @@ async def copymessages(ctx):
                     await target_channel.send(f'WARNING: Could not copy message...')
                 previous_message = message
                 await asyncio.sleep(1)
-            await ctx.send(f'Finished copying messages from {source_channel.name} to {target_channel.name} in order.')
+            print(f'Finished copying messages from {source_channel.name} to {target_channel.name}.')
+            #await ctx.send(f'Finished copying messages from {source_channel.name} to {target_channel.name} in order.')
         else:
             await ctx.send("Could not find the source or target channel.")
+            print("Could not find the source or target channel.")
     else:
         await ctx.send("This command can only be used in the source channel.")
+        print("This command can only be used in the source channel.")
 
 
 #! Test commands
-@bot.command()
+@bot.command(help="For testing purposes only, it starts a counting on the given channel to generate messages for it")
 async def counting(ctx):
     # Check if the command was issued in the correct channel
     #! This function is only for testing purposes, it generates messages for a channel 
     for i in range(120):
         await ctx.send(f'{i}')
-@bot.command()
+@bot.command(help="Deletes all messeges from the target channel sent by the bot (target channel shall be preset in the code)")
 async def deletebotmessages(ctx):
+    print("Start deleting messages sent by the bot...")
     # Check if the command was issued in the target channel
     if ctx.channel.id == TARGET_CHANNEL_ID:
         target_channel = bot.get_channel(TARGET_CHANNEL_ID)
@@ -108,21 +112,13 @@ async def deletebotmessages(ctx):
                     await asyncio.sleep(0.1)  # Adjust the delay as needed
             
             await ctx.send(f'Deleted {deleted_count} messages sent by the bot from {target_channel.name}.')
+            print(f'Deleted {deleted_count} messages sent by the bot from {target_channel.name}.')
         else:
             await ctx.send("Could not find the target channel.")
+            print("Could not find the target channel.")
     else:
         await ctx.send("This command can only be used in the target channel.")
-#* Help
-@bot.command()
-async def help(ctx):
-    # Check if the command was issued in the correct channel
-    #! This function is only for testing purposes, it generates messages for a channel 
-    help_msg = "List of commands:\n"
-    help_msg += "!compymessages: *copies messages from the source channel to the target channel (The chanels shall be preset in the code)*\n"
-    help_msg += "!deletebotmessages: *Deletes all messeges from the target channel sent by the bot (target channel shall be preset in the code)*\n"
-    help_msg += "!counting: *For testing purposes only, it starts a counting on the given channel to generate messages for it\n"
-    help_msg += "!help: *Lists the commands implemented for the bot"
+        print("This command can only be used in the target channel.")
 
-    await ctx.send(f'{i}')
 # Run the bot
 bot.run(BOT_TOKEN)
